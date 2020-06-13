@@ -1,0 +1,13 @@
+package com.lms.service;
+
+import org.springframework.mail.SimpleMailMessage;
+
+public class EmailServiceImpl implements EmailService {
+
+	@Override
+	public void sendEmail(SimpleMailMessage emailId) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
