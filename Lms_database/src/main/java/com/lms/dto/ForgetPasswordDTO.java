@@ -2,12 +2,14 @@ package com.lms.dto;
 public class ForgetPasswordDTO 
 {
 	private String email;
-	private long mobileNo;
-	public ForgetPasswordDTO(String email, long mobileNo) 
-	{
+	private long contact_number;
+	public ForgetPasswordDTO() {
+		super();
+	}
+	public ForgetPasswordDTO(String email, long contact_number) {
 		super();
 		this.email = email;
-		this.mobileNo = mobileNo;
+		this.contact_number = contact_number;
 	}
 	public String getEmail() {
 		return email;
@@ -15,10 +17,11 @@ public class ForgetPasswordDTO
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public long getMobileNo() {
-		return mobileNo;
+	public long getContact_number() {
+		return contact_number;
 	}
-	public void setMobileNo(long mobileNo) {
-		this.mobileNo = mobileNo;
+	public void setContact_number(long contact_number) {
+		this.contact_number = contact_number;
 	}
-}
+	
+	}
