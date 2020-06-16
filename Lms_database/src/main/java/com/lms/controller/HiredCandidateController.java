@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.lms.configuration.ApplicationConfiguration;
 import com.lms.exception.DataNotFoundException;
 import com.lms.model.Response;
 import com.lms.service.HiredCandidateService;
@@ -18,9 +20,10 @@ public class HiredCandidateController {
 	private HiredCandidateService hiredCandidateService;
 
 	 @PostMapping("/takecandidatelist")
-	    public ResponseEntity<Response> importHiredCandidate(@RequestParam("file") MultipartFile filePath,
-	                                                             @RequestParam String token) throws MessagingException, DataNotFoundException {
-	        return new ResponseEntity<>(hiredCandidateService.dropHireCandidateInDataBase(filePath, token), HttpStatus.CREATED);
+	    public ResponseEntity<Response> importHiredCandidate(@RequestParam("file") MultipartFile filePath) throws MessagingException, DataNotFoundException {
+		 boolean response=hiredCandidateService.getHiredCandidate(filePath);
+	        return new ResponseEntity<Response>(new Response(200,ApplicationConfiguration.getMessageAccessor()
+	                .getMessage("109"),response), HttpStatus.CREATED);
 	    }
 
 }
