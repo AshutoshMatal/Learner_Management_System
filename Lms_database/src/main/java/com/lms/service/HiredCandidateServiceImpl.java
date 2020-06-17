@@ -5,8 +5,10 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
@@ -17,6 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -31,7 +34,6 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import  static com.lms.message.CandidateResponse.*;
 
 @Service
-@PropertySource("classpath:message.properties")
 public class HiredCandidateServiceImpl implements HiredCandidateService{
 
 	@Autowired
@@ -42,9 +44,9 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 
 	@Autowired
 	private JavaMailSender sender;
+	
 	@Autowired
 	private SpringTemplateEngine templateEngine;
-
 
 	@Override
 	public boolean getHiredCandidate(MultipartFile filePath)  {
@@ -53,7 +55,7 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 		try (InputStream fis = filePath.getInputStream()) {
 			//Create Workbook instance holding reference to .xlsx file
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
-			//Get first/desired sheet from the workbook
+			//Get first sheet from the workbook
 			XSSFSheet sheet = workbook.getSheetAt(0);
 			//Iterate through each rows one by one
 			Iterator rows = sheet.rowIterator();
@@ -100,7 +102,8 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 						hiredCandidateDto.setCreator_stamp(LocalDateTime.now());
 						cell = (XSSFCell) cells.next();
 						hiredCandidateDto.setCreator_user(hiredCandidateDto.getId());
-
+						save(hiredCandidateDto);
+						
 					}
 				}
 				flag = false;
@@ -111,6 +114,14 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 		return true;
 	}
 
+	@Override
+	public void save(HiredCandidateDTO hiredCandidateDto) {
+		HiredCandidate hiredCandidate = mapper.map(hiredCandidateDto, HiredCandidate.class);
+		if (hiredCandidate.equals(null))
+			throw new DataNotFoundException(400, "Null Values found");
+		hiredCandidateRepository.save(hiredCandidate);
+	}
+	
 }
 
 
