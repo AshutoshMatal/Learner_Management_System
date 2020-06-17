@@ -44,9 +44,16 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 
 	@Autowired
 	private JavaMailSender sender;
-	
+
 	@Autowired
 	private SpringTemplateEngine templateEngine;
+
+
+
+
+	private final String rejected = String.valueOf(REJECTED);
+	private final String accepted = String.valueOf(ACCEPTED);
+	private final String pending = String.valueOf(PENDING);
 
 	@Override
 	public boolean getHiredCandidate(MultipartFile filePath)  {
@@ -103,7 +110,7 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 						cell = (XSSFCell) cells.next();
 						hiredCandidateDto.setCreator_user(hiredCandidateDto.getId());
 						save(hiredCandidateDto);
-						
+						sendSelectionMail(hiredCandidateDto.getEmail());
 					}
 				}
 				flag = false;
@@ -121,7 +128,25 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 			throw new DataNotFoundException(400, "Null Values found");
 		hiredCandidateRepository.save(hiredCandidate);
 	}
-	
+
+	private void sendSelectionMail(String email) throws MessagingException  {
+		Optional<HiredCandidate> hiredCandidate = hiredCandidateRepository.findByEmail(email);
+
+		MimeMessage message = sender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message,
+				MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+				StandardCharsets.UTF_8.name());
+		final Context ctx = new Context();
+		ctx.setVariable("name", hiredCandidate.get().getFirst_name());
+		ctx.setVariable("acceptLink", "http://localhost:8080/hirecandidate/update?candidateResponse=ACCEPTED&emailId=" + email);
+		ctx.setVariable("rejectLink", "http://localhost:8080/hirecandidate/update?candidateResponse=REJECTED&emailId=" + email);
+		String html = templateEngine.process("sendmail", ctx);
+		helper.setTo(email);
+		helper.setText(html, true);
+		helper.setSubject("Fellowship Shortlist");
+		sender.send(message);
+	}
+
 }
 
 
