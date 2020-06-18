@@ -21,7 +21,7 @@ import com.lms.service.UserServiceImpl;
 public class UserController{
 	@Autowired 
 	UserServiceImpl userService;
-	
+
 	@PostMapping("/register")
 	public ResponseEntity<Response> register(@RequestBody UserRegisterDTO userRegisterDto)throws Exception,NullPointerException{
 		Response response=userService.register(userRegisterDto);
@@ -33,7 +33,6 @@ public class UserController{
 		Response response=userService.login(userLoginDto);
 		return new ResponseEntity<Response>(response, HttpStatus.OK);
 	}
-	
 	@PostMapping("/forget")
 	public ResponseEntity<Response> forget(@RequestBody ForgetPasswordDTO forgetPasswordDto){
 		Response response=userService.forget(forgetPasswordDto);
@@ -44,11 +43,11 @@ public class UserController{
 		Response response=userService.reset(token, resetPasswordDto);
 		return new ResponseEntity<Response>(response, HttpStatus.OK);
 	}
-	 @GetMapping("/validateUser/{token}")
+	@GetMapping("/validateUser/{token}")
 	public ResponseEntity<String> validateUser(@PathVariable String token)
 	{
 		Response response=userService.validateUser(token);
 		return new ResponseEntity<String>(response.getMessage(), HttpStatus.OK);
 	}
-	 
+
 }
