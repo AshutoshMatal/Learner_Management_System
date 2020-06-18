@@ -32,32 +32,10 @@ public class MessageInfo {
 
 	public String Verify_User = "User can Login Successfully";
 
+	public String Update_Status= "Update Successfully";
+	
+	public String Iilegal_Request="IIlegal Request";
+	
+	public String Imported_Success="Imported Successfully";
 
-	public String Note_Not_Exist = "Note does not Exist";
-
-	public String Note_UnPin = "You can Pin it again";
-
-	public String Note_Pin = "You can UnPin it again";
-
-	public String Note_Archive = "You can UnAchive it again";
-
-	public String Note_UnArchive = "You can Archive it agin";
-
-	public String Note_UnTrash = "Note is Successfully Restored !!!!";
-
-	public String Note_Trash = "Note is Successfully Delete and Added into Trash !!!!";
-
-	public String Note_Label_Not_Exist = "No Note with this Label";
-
-	public String Note_Create = "Note is Successfully create for given User token";
-
-	public String Note_Update = "Note is Update Successfully";
-
-	public String Note_Delete = "Note is Permanently Deleted from Note List";
-
-	public String Note_Not_Exist_User = "Note does not belong to User";
-
-	public String Note_Not_Exist_In_Trash = "Note does not Exist in Trash";
-
-
-}
+	}
