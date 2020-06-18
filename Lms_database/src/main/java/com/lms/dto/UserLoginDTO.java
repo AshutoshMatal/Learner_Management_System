@@ -1,5 +1,4 @@
 package com.lms.dto;
-
 public class UserLoginDTO 
 {
 	//VARIABLES
@@ -23,8 +22,7 @@ public class UserLoginDTO
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
+	}	
 }
 
 
