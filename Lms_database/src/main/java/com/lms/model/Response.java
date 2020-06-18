@@ -2,7 +2,8 @@ package com.lms.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class Response {
+public class Response 
+{
 	private int statuscode;
 	private String message;
 	private Object data;
@@ -16,15 +17,12 @@ public class Response {
 		this.message = message;
 		this.data = data;
 	}
-
 	public int getStatuscode() {
 		return statuscode;
 	}
-
 	public void setStatuscode(int statuscode) {
 		this.statuscode = statuscode;
 	}
-
 	public String getMessage() {
 		return message;
 	}
