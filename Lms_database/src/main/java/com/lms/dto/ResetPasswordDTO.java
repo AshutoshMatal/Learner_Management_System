@@ -1,13 +1,16 @@
 package com.lms.dto;
-public class ResetPasswordDTO {
+public class ResetPasswordDTO 
+{
 	//VARIABLES 
 	private String password;
 	 private String confirmPassword;
 	//cONSTRUCTOR  
-	public ResetPasswordDTO() {
+	public ResetPasswordDTO() 
+	{
 		super();
 	}
-	public ResetPasswordDTO(String password, String confirmPassword) {
+	public ResetPasswordDTO(String password, String confirmPassword) 
+	{
 		super();
 		this.password = password;
 		this.confirmPassword = confirmPassword;
@@ -25,5 +28,4 @@ public class ResetPasswordDTO {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-
 }
