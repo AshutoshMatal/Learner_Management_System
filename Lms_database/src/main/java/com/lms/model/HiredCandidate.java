@@ -1,11 +1,10 @@
 package com.lms.model;
-
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 @Table(name="hired_candidate")
 @Entity(name="hired_candidate")
 public class HiredCandidate {
@@ -18,7 +17,7 @@ public class HiredCandidate {
 	private String hired_city;
 	private String degree;
 	private Date hired_date;
-	private int mobile_number;
+	private int contact_number;
 	private int permanent_pincode;
 	private String hired_lab;
 	private String attitude;
@@ -26,7 +25,7 @@ public class HiredCandidate {
 	private String knowledge_remark;
 	private String aggregate_remark;
 	private String status;
-	private Date creator_stamp;
+	private LocalDateTime creator_stamp;
 	private String creator_user;
 	public int getId() {
 		return id;
@@ -76,11 +75,11 @@ public class HiredCandidate {
 	public void setHired_date(Date hired_date) {
 		this.hired_date = hired_date;
 	}
-	public int getMobile_number() {
-		return mobile_number;
+	public int getContact_number() {
+		return contact_number;
 	}
-	public void setMobile_number(int mobile_number) {
-		this.mobile_number = mobile_number;
+	public void setContact_number(int contact_number) {
+		this.contact_number = contact_number;
 	}
 	public int getPermanent_pincode() {
 		return permanent_pincode;
@@ -124,10 +123,10 @@ public class HiredCandidate {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Date getCreator_stamp() {
+	public LocalDateTime getCreator_stamp() {
 		return creator_stamp;
 	}
-	public void setCreator_stamp(Date creator_stamp) {
+	public void setCreator_stamp(LocalDateTime creator_stamp) {
 		this.creator_stamp = creator_stamp;
 	}
 	public String getCreator_user() {
@@ -136,6 +135,4 @@ public class HiredCandidate {
 	public void setCreator_user(String creator_user) {
 		this.creator_user = creator_user;
 	}
-	
-
 }
