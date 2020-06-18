@@ -15,7 +15,7 @@ public class User
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	private String email;
 
 	private String first_name;
@@ -27,9 +27,9 @@ public class User
 	private long contact_number;
 
 	private boolean verified=false;
-	
+
 	private LocalDateTime creator_stamp;
-	
+
 	private String creator_user;
 
 	public int getId() {
@@ -103,10 +103,10 @@ public class User
 	public void setCreator_user(String creator_user) {
 		this.creator_user = creator_user;
 	}
-	
 
-	
 
-	
-	
+
+
+
+
 }
