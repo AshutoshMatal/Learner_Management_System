@@ -48,9 +48,6 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 	@Autowired
 	private SpringTemplateEngine templateEngine;
 
-
-
-
 	private final String rejected = String.valueOf(REJECTED);
 	private final String accepted = String.valueOf(ACCEPTED);
 	private final String pending = String.valueOf(PENDING);
@@ -147,6 +144,21 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 		sender.send(message);
 	}
 
+	@Override
+	public List<HiredCandidate> getAllHiredCandidates() 
+	{
+		List<HiredCandidate> list = hiredCandidateRepository.findAll();
+		if (list.equals(null))
+			throw new DataNotFoundException(400, "Null Values found");
+		return list;
+	}
+
+	@Override
+	public HiredCandidate viewCandidateProfile(Integer id) throws DataNotFoundException 
+	{
+		return hiredCandidateRepository.findById(id)
+				.orElseThrow(() -> new DataNotFoundException(400, "No such id found"));
+	}
 }
 
 
