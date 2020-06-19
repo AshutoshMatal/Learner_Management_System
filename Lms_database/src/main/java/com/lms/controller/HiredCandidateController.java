@@ -14,10 +14,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lms.configuration.ApplicationConfiguration;
 import com.lms.exception.DataNotFoundException;
+import com.lms.model.HiredCandidate;
 import com.lms.model.Response;
 import com.lms.service.HiredCandidateService;
-@RestController
+
 @RequestMapping("/hiredcandidate")
+@RestController
 public class HiredCandidateController {
 	@Autowired
 	private HiredCandidateService hiredCandidateService;
@@ -35,4 +37,9 @@ public class HiredCandidateController {
 	        return new ResponseEntity<List>(list, HttpStatus.MULTI_STATUS);
 	    }
 
+	 @GetMapping("/viewcandidateprofile")
+	    public ResponseEntity<Response> viewCandidateProfile(@RequestParam(value = "id") Integer id) {
+	        HiredCandidate hiredCandidate = hiredCandidateService.viewCandidateProfile(id);
+	        return new ResponseEntity<Response>(new Response(200,ApplicationConfiguration.getMessageAccessor().getMessage("105"),hiredCandidate), HttpStatus.OK);
+	    }
 }
