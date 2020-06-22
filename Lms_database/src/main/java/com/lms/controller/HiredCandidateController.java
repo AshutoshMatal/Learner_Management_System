@@ -42,4 +42,10 @@ public class HiredCandidateController {
 	        HiredCandidate hiredCandidate = hiredCandidateService.viewCandidateProfile(id);
 	        return new ResponseEntity<Response>(new Response(200,ApplicationConfiguration.getMessageAccessor().getMessage("105"),hiredCandidate), HttpStatus.OK);
 	    }
+	 @GetMapping("/update")
+	    public ResponseEntity<Response> update(@RequestParam String candidateResponse,
+	                                               @RequestParam String email) throws DataNotFoundException {
+		HiredCandidate hiredCandidate= hiredCandidateService.update(candidateResponse, email);
+	        return new ResponseEntity<Response>(new Response( 200, ApplicationConfiguration.getMessageAccessor().getMessage("110"),hiredCandidate), HttpStatus.OK);
+	    }
 }
