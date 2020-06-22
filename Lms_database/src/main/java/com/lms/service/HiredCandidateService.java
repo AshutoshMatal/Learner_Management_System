@@ -10,4 +10,11 @@ public interface HiredCandidateService {
 
 	public HiredCandidate viewCandidateProfile(Integer id) throws DataNotFoundException;
 
+	List getAllHiredCandidates() throws DataNotFoundException;
+
+	public boolean getHiredCandidate(MultipartFile filePath);
+
+	public void save(HiredCandidateDTO hiredCandidateDto);
+
+	public HiredCandidate update(String candidateResponse,String email);
 }
