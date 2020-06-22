@@ -135,8 +135,8 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 				StandardCharsets.UTF_8.name());
 		final Context ctx = new Context();
 		ctx.setVariable("name", hiredCandidate.get().getFirst_name());
-		ctx.setVariable("acceptLink", "http://localhost:8080/hirecandidate/update?candidateResponse=ACCEPTED&emailId=" + email);
-		ctx.setVariable("rejectLink", "http://localhost:8080/hirecandidate/update?candidateResponse=REJECTED&emailId=" + email);
+		ctx.setVariable("acceptLink", "http://localhost:8080/hiredcandidate/update?candidateResponse=ACCEPTED&email=" + email);
+		ctx.setVariable("rejectLink", "http://localhost:8080/hiredcandidate/update?candidateResponse=REJECTED&email=" + email);
 		String html = templateEngine.process("sendmail", ctx);
 		helper.setTo(email);
 		helper.setText(html, true);
@@ -151,6 +151,22 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 		if (list.equals(null))
 			throw new DataNotFoundException(400, "Null Values found");
 		return list;
+	}
+	@Override
+	public HiredCandidate update(String candidateResponse,String email) 
+	{
+		HiredCandidate hiredCandidate = hiredCandidateRepository.findByEmail(email)
+				.orElseThrow(
+						() -> new DataNotFoundException(400, "No such id exist in data base.")
+						);
+		if (candidateResponse. equals(accepted) || candidateResponse.equals(rejected)) {
+			hiredCandidate.setStatus(candidateResponse);
+			hiredCandidateRepository.save(hiredCandidate);
+			
+			return hiredCandidate;
+		}
+		
+		return hiredCandidate;
 	}
 
 	@Override
