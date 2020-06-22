@@ -13,16 +13,15 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 @EnableAutoConfiguration
 public class ApplicationConfiguration {
 
-    private static MessageSourceAccessor messageSourceAccessor;
+	private static MessageSourceAccessor messageSourceAccessor;
 
-    @PostConstruct
-    private static void initMessageSourceAccessor() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasenames("classpath:message");
-        messageSourceAccessor = new MessageSourceAccessor(messageSource, Locale.getDefault());
-    }
-
-    public static MessageSourceAccessor getMessageAccessor() {
-        return messageSourceAccessor;
-    }
+	@PostConstruct
+	private static void initMessageSourceAccessor() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasenames("classpath:message");
+		messageSourceAccessor = new MessageSourceAccessor(messageSource, Locale.getDefault());
+	}
+	public static MessageSourceAccessor getMessageAccessor() {
+		return messageSourceAccessor;
+	}
 }
