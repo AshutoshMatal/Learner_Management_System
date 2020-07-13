@@ -24,28 +24,48 @@ public class HiredCandidateController {
 	@Autowired
 	private HiredCandidateService hiredCandidateService;
 
-	 @PostMapping("/takecandidatelist")
-	    public ResponseEntity<Response> importHiredCandidate(@RequestParam("file") MultipartFile filePath) throws MessagingException, DataNotFoundException {
-		 boolean response=hiredCandidateService.getHiredCandidate(filePath);
-	        return new ResponseEntity<Response>(new Response(200,ApplicationConfiguration.getMessageAccessor()
-	                .getMessage("109"),response), HttpStatus.CREATED);
-	    }
-	 
-	 @GetMapping("/hiredcandidatelist")
-	    public ResponseEntity<List> hiredCandidate() {
-	        List list = hiredCandidateService.getAllHiredCandidates();
-	        return new ResponseEntity<List>(list, HttpStatus.MULTI_STATUS);
-	    }
+	/**
+	 * @param filePath
+	 * @return
+	 * @throws MessagingException
+	 * @throws DataNotFoundException
+	 */
+	@PostMapping("/takecandidatelist")
+	public ResponseEntity<Response> importHiredCandidate(@RequestParam("file") MultipartFile filePath) throws MessagingException, DataNotFoundException {
+		boolean response=hiredCandidateService.getHiredCandidate(filePath);
+		return new ResponseEntity<Response>(new Response(ApplicationConfiguration.getMessageAccessor()
+				.getMessage("109"),response), HttpStatus.CREATED);
+	}
 
-	 @GetMapping("/viewcandidateprofile")
-	    public ResponseEntity<Response> viewCandidateProfile(@RequestParam(value = "id") Integer id) {
-	        HiredCandidate hiredCandidate = hiredCandidateService.viewCandidateProfile(id);
-	        return new ResponseEntity<Response>(new Response(200,ApplicationConfiguration.getMessageAccessor().getMessage("105"),hiredCandidate), HttpStatus.OK);
-	    }
-	 @GetMapping("/update")
-	    public ResponseEntity<Response> update(@RequestParam String candidateResponse,
-	                                               @RequestParam String email) throws DataNotFoundException {
+	/**
+	 * @return
+	 */
+	@GetMapping("/hiredcandidatelist")
+	public ResponseEntity<List> hiredCandidate() {
+		List list = hiredCandidateService.getAllHiredCandidates();
+		return new ResponseEntity<List>(list, HttpStatus.MULTI_STATUS);
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/viewcandidateprofile")
+	public ResponseEntity<Response> viewCandidateProfile(@RequestParam(value = "id") Integer id) {
+		HiredCandidate hiredCandidate = hiredCandidateService.viewCandidateProfile(id);
+		return new ResponseEntity<Response>(new Response(ApplicationConfiguration.getMessageAccessor().getMessage("105"),hiredCandidate), HttpStatus.OK);
+	}
+
+	/**
+	 * @param candidateResponse
+	 * @param email
+	 * @return
+	 * @throws DataNotFoundException
+	 */
+	@GetMapping("/update")
+	public ResponseEntity<Response> update(@RequestParam String candidateResponse,
+			@RequestParam String email) throws DataNotFoundException {
 		HiredCandidate hiredCandidate= hiredCandidateService.update(candidateResponse, email);
-	        return new ResponseEntity<Response>(new Response( 200, ApplicationConfiguration.getMessageAccessor().getMessage("110"),hiredCandidate), HttpStatus.OK);
-	    }
+		return new ResponseEntity<Response>(new Response(ApplicationConfiguration.getMessageAccessor().getMessage("110"),hiredCandidate), HttpStatus.OK);
+	}
 }
