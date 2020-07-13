@@ -1,16 +1,11 @@
 package com.lms.service;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -19,8 +14,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -50,8 +43,11 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 
 	private final String rejected = String.valueOf(REJECTED);
 	private final String accepted = String.valueOf(ACCEPTED);
-	private final String pending = String.valueOf(PENDING);
 
+	/**
+	 *@param filepath
+	 *@return Method to read excel file and store data to database
+	 */
 	@Override
 	public boolean getHiredCandidate(MultipartFile filePath)  {
 		boolean flag = true;
@@ -118,6 +114,11 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 		return true;
 	}
 
+
+	/**
+	 * @param hiredCandidateDto 
+	 * @return save details to Database.
+	 */
 	@Override
 	public void save(HiredCandidateDTO hiredCandidateDto) {
 		HiredCandidate hiredCandidate = mapper.map(hiredCandidateDto, HiredCandidate.class);
@@ -144,6 +145,9 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 		sender.send(message);
 	}
 
+	/**
+	 * @return list of hired candidate.
+	 */
 	@Override
 	public List<HiredCandidate> getAllHiredCandidates() 
 	{
@@ -152,6 +156,11 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 			throw new DataNotFoundException(400, "Null Values found");
 		return list;
 	}
+	/**
+	 * @param candidateResponse
+	 * @param email
+	 * @return candidate details with updated status.
+	 */
 	@Override
 	public HiredCandidate update(String candidateResponse,String email) 
 	{
@@ -162,13 +171,18 @@ public class HiredCandidateServiceImpl implements HiredCandidateService{
 		if (candidateResponse. equals(accepted) || candidateResponse.equals(rejected)) {
 			hiredCandidate.setStatus(candidateResponse);
 			hiredCandidateRepository.save(hiredCandidate);
-			
+
 			return hiredCandidate;
 		}
-		
+
 		return hiredCandidate;
 	}
 
+
+	/**
+	 * @param id
+	 * @return candidate details.
+	 */
 	@Override
 	public HiredCandidate viewCandidateProfile(Integer id) throws DataNotFoundException 
 	{
